@@ -73,6 +73,12 @@
 
         public static function update($params){
 
+            if(empty($params['titulo']) OR empty($params['conteudo'])){
+                throw new Exception("Preencha todos os campos");
+
+                return false;
+            }
+           
             $con = Connection::getConn();
 
             $sql = "UPDATE postagem SET titulo = :tit, conteudo = :cont WHERE id = :id";
@@ -81,6 +87,7 @@
             $sql->bindValue(':cont',$params['conteudo']);
             $sql->bindValue(':id',$params['id']);
             $resultado = $sql->execute();
+
             
             if($resultado == 0) {
                 throw new Exception("Falha ao alterar publicação");
